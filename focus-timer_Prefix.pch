@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'focus-timer' target in the 'focus-timer' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
