@@ -172,4 +172,6 @@
   [alert runModal];
 }
 
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication { return YES; }
+
 @end
