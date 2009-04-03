@@ -11,7 +11,7 @@
   if(self = [super init]) {
     workSeconds = 1500;
     breakSeconds = 300;
-    cycles = 2;
+    cycles = 4;
     
     isWorkTime = NO;
     isBreakTime = NO;
