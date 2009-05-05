@@ -1,6 +1,8 @@
 #import <Cocoa/Cocoa.h>
+@class PreferencesController;
 
 @interface MainMenuController : NSObject {
+  PreferencesController *preferencesController;
   IBOutlet NSTextField *timerLabel;
   IBOutlet NSTextField *workTextField;
   IBOutlet NSTextField *breakTextField;
@@ -23,6 +25,8 @@
 @property NSInteger breakSeconds;
 @property NSInteger cycles;
 @property NSTimer *timer;
+
+- (IBAction) showPreferencesPanel: (id) sender;
 
 - (IBAction) startTimer: (id) sender;
 - (void) startWorkTimer;

@@ -1,4 +1,5 @@
 #import "MainMenuController.h"
+#import "PreferencesController.h"
 
 @implementation MainMenuController
 
@@ -6,6 +7,31 @@
 @synthesize breakSeconds;
 @synthesize cycles;
 @synthesize timer;
+
++ (void) initialize {
+  NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+  
+  NSMutableArray *savedTimers = [[NSMutableArray alloc] init];
+  
+  NSMutableDictionary *pomodoroTimer = [NSMutableDictionary dictionary];
+  [pomodoroTimer setObject: @"The Pomodoro Technique" forKey: @"name"];
+  [pomodoroTimer setObject: [NSNumber numberWithInt: 1500] forKey: @"workSeconds"];
+  [pomodoroTimer setObject: [NSNumber numberWithInt: 300] forKey: @"breakSeconds"];
+  [pomodoroTimer setObject: [NSNumber numberWithInt: 4] forKey: @"cycles"];
+  [savedTimers addObject: pomodoroTimer];
+  
+  NSMutableDictionary *procrastinationTimer = [NSMutableDictionary dictionary];
+  [procrastinationTimer setObject: @"The Procrastination Hack" forKey: @"name"];
+  [procrastinationTimer setObject: [NSNumber numberWithInt: 600] forKey: @"workSeconds"];
+  [procrastinationTimer setObject: [NSNumber numberWithInt: 120] forKey: @"breakSeconds"];
+  [procrastinationTimer setObject: [NSNumber numberWithInt: 5] forKey: @"cycles"];
+  [savedTimers addObject: procrastinationTimer];
+  
+  [defaultValues setObject: savedTimers forKey: @"savedTimers"];  
+  [defaultValues setObject: @"Use Growl Notifications" forKey: @"timerAlerts"];
+  
+  [[NSUserDefaults standardUserDefaults] registerDefaults: defaultValues];
+}
 
 - (id) init {
   if(self = [super init]) {
@@ -31,6 +57,12 @@
   [stopButton setEnabled: NO];
   [self addObserver: self forKeyPath: @"workSeconds" options: NSKeyValueObservingOptionNew context: NULL];
   [self addObserver: self forKeyPath: @"breakSeconds" options: NSKeyValueObservingOptionNew context: NULL];
+}
+
+- (IBAction) showPreferencesPanel: (id) sender {
+  [[PreferencesController sharedPrefsWindowController] showWindow:nil];
+	(void)sender;
+
 }
 
 - (void) observeValueForKeyPath: (NSString *) keyPath ofObject: (id) object change: (NSDictionary *) change context: (void *) context { 

@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Focus Timer</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.ryanbriones.${PRODUCT_NAME:identifier}</string>
+	<string>com.brionesandco.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>c529b71</string>
+	<string>67ab50d</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2009 Ryan Carmelo Briones. All Rights Reserved.</string>
 	<key>NSMainNibFile</key>
