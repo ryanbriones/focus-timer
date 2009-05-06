@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110B7FB10FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 110B7FB00FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.m */; };
 		112968370FA505EB00BF3CD4 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 112968360FA505EB00BF3CD4 /* PreferencesController.m */; };
 		112968630FA50E0400BF3CD4 /* DBPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 112968620FA50E0400BF3CD4 /* DBPrefsWindowController.m */; };
 		112968680FA50E9A00BF3CD4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 112968670FA50E9A00BF3CD4 /* Preferences.xib */; };
@@ -24,6 +25,8 @@
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		110B7FAF0FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTSavedTimerDescriptionTransformer.h; sourceTree = "<group>"; };
+		110B7FB00FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTSavedTimerDescriptionTransformer.m; sourceTree = "<group>"; };
 		112968350FA505EB00BF3CD4 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		112968360FA505EB00BF3CD4 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		112968610FA50E0400BF3CD4 /* DBPrefsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPrefsWindowController.h; sourceTree = "<group>"; };
@@ -68,6 +71,8 @@
 				113799590F81469C0058E20E /* MainMenuController.m */,
 				112968350FA505EB00BF3CD4 /* PreferencesController.h */,
 				112968360FA505EB00BF3CD4 /* PreferencesController.m */,
+				110B7FAF0FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.h */,
+				110B7FB00FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				1137995A0F81469C0058E20E /* MainMenuController.m in Sources */,
 				112968370FA505EB00BF3CD4 /* PreferencesController.m in Sources */,
 				112968630FA50E0400BF3CD4 /* DBPrefsWindowController.m in Sources */,
+				110B7FB10FB1CA1100882B04 /* FTSavedTimerDescriptionTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

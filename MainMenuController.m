@@ -1,5 +1,7 @@
 #import "MainMenuController.h"
 #import "PreferencesController.h"
+#import "FTTimerFormatter.h"
+#import "FTSavedTimerDescriptionTransformer.h"
 
 @implementation MainMenuController
 
@@ -11,7 +13,7 @@
 + (void) initialize {
   NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
   
-  NSMutableArray *savedTimers = [[NSMutableArray alloc] init];
+  NSMutableArray *savedTimers = [NSMutableArray array];
   
   NSMutableDictionary *pomodoroTimer = [NSMutableDictionary dictionary];
   [pomodoroTimer setObject: @"The Pomodoro Technique" forKey: @"name"];
@@ -42,6 +44,9 @@
     isWorkTime = NO;
     isBreakTime = NO;
     cyclesCompleted = 0;
+    
+    FTSavedTimerDescriptionTransformer *stTransformer = [[FTSavedTimerDescriptionTransformer alloc] init];
+    [NSValueTransformer setValueTransformer: stTransformer forName: @"FTSavedTimerDescriptionTransformer"];
   }
   
   return self;
