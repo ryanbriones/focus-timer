@@ -70,6 +70,15 @@
 
 }
 
+- (void) updateTimerFieldsFromPreset: (id) sender {
+  NSArray *savedTimers = [[NSUserDefaults standardUserDefaults] objectForKey: @"savedTimers"];
+  NSDictionary *selectedPreset = [savedTimers objectAtIndex: ([sender indexOfSelectedItem] - 1)];
+  
+  self.workSeconds = [[selectedPreset objectForKey: @"workSeconds"] intValue];
+  self.breakSeconds = [[selectedPreset objectForKey: @"breakSeconds"] intValue];
+  self.cycles = [[selectedPreset objectForKey: @"cycles"] intValue];
+}
+
 - (void) observeValueForKeyPath: (NSString *) keyPath ofObject: (id) object change: (NSDictionary *) change context: (void *) context { 
   if([keyPath isEqual: @"workSeconds"]) {
     [workTextField validateEditing];

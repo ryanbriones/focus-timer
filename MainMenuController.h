@@ -27,6 +27,7 @@
 @property NSTimer *timer;
 
 - (IBAction) showPreferencesPanel: (id) sender;
+- (IBAction) updateTimerFieldsFromPreset: (id) sender;
 
 - (IBAction) startTimer: (id) sender;
 - (void) startWorkTimer;
