@@ -34,6 +34,18 @@
   
   [[NSUserDefaults standardUserDefaults] registerDefaults: defaultValues];
 }
+- (NSDictionary *) registrationDictionaryForGrowl {
+  NSMutableArray *notifications = [NSMutableArray array];
+  [notifications addObject: @"Work Timer Finished"];
+  [notifications addObject: @"Break Timer Finished"];
+  [notifications addObject: @"All Cycles Complete"];
+  
+  NSDictionary *regDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                            notifications, GROWL_NOTIFICATIONS_ALL,
+                            notifications, GROWL_NOTIFICATIONS_DEFAULT, nil];
+                            
+  return regDict;
+}
 
 - (id) init {
   if(self = [super init]) {
@@ -59,6 +71,8 @@
 }
 
 - (void) awakeFromNib {
+  [GrowlApplicationBridge setGrowlDelegate: self];
+
   [stopButton setEnabled: NO];
   [self addObserver: self forKeyPath: @"workSeconds" options: NSKeyValueObservingOptionNew context: NULL];
   [self addObserver: self forKeyPath: @"breakSeconds" options: NSKeyValueObservingOptionNew context: NULL];
@@ -149,8 +163,15 @@
   [cyclesTextField setEnabled: YES];
 }
 
-- (void) stopWorkTimer {}
-- (void) stopBreakTimer {}
+- (void) stopWorkTimer {
+  NSLog(@"stopping work timer");
+  [timer invalidate];
+}
+
+- (void) stopBreakTimer {
+  NSLog(@"stopping break timer");
+  [timer invalidate];
+}
 
 - (void) updateTimer: (NSTimer *) notificationTimer {
   NSInteger secondsSinceTimerStarted = [[notificationTimer userInfo] timeIntervalSinceNow] * -1;
@@ -159,15 +180,22 @@
   
   if(secondsLeftOnTimer == 0) {
     if(isBreakTime) cyclesCompleted++;
+    NSString *timerAlerts = [[NSUserDefaults standardUserDefaults] objectForKey: @"timerAlerts"];
     
     if(isWorkTime && ![self hasCompletedAllCycles]) {
       [self stopWorkTimer];
       [self alertEndOfWork];
-      [self startBreakTimer];
+      
+      if(timerAlerts == @"Use OS Alert Dialogs") {
+        [self startBreakTimer];
+      }
     } else if(isBreakTime && ![self hasCompletedAllCycles]) {
       [self stopBreakTimer];
       [self alertEndOfBreak];
-      [self startWorkTimer];
+      
+      if(timerAlerts == @"Use OS Alert Dialogs") {
+        [self startWorkTimer];
+      }
     } else {
       [self stopTimer: self];
       [self alertEndOfCycle];
@@ -180,21 +208,34 @@
 }
 
 - (void) alertEndOfWork {
-  NSAlert *alert = [NSAlert alertWithMessageText: @"Time to take a break!" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"" ];
   NSSound *alertSound = [NSSound soundNamed: @"Glass"];
-  
   if(alertSound) [alertSound play];
-  [alert runModal];
+  
+  NSString *timerAlerts = [[NSUserDefaults standardUserDefaults] objectForKey: @"timerAlerts"];
+  if(timerAlerts == @"Use Growl Notifications") {
+    [GrowlApplicationBridge notifyWithTitle: @"Work Timer Finished" description: @"Time to take a break!"
+                            notificationName: @"Work Timer Finished" iconData: nil 
+                            priority: 0 isSticky: YES clickContext: @"StartBreakClick"];
+  } else {  
+    NSAlert *alert = [NSAlert alertWithMessageText: @"Time to take a break!" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"" ];
+    [alert runModal];
+  }
 }
 - (void) alertEndOfBreak {
-  NSAlert *alert = [NSAlert alertWithMessageText: @"Time to get back to work!" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"" ];
   NSSound *alertSound = [NSSound soundNamed: @"Glass"];
-  
   if(alertSound) [alertSound play];
-  [alert runModal];
+  
+  NSString *timerAlerts = [[NSUserDefaults standardUserDefaults] objectForKey: @"timerAlerts"];
+  if(timerAlerts == @"Use Growl Notifications") {
+    [GrowlApplicationBridge notifyWithTitle: @"Break Timer Finished" description: @"Time to get back to work!"
+                            notificationName: @"Break Timer Finished" iconData: nil 
+                            priority: 0 isSticky: YES clickContext: @"StartWorkClick"];
+  } else {
+    NSAlert *alert = [NSAlert alertWithMessageText: @"Time to get back to work!" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"" ];
+    [alert runModal];
+  }
 }
 - (void) alertEndOfCycle {
-  NSLog(@"%d, %d, %d", workSeconds, breakSeconds, cycles);
   NSInteger totalTimeInSeconds = (workSeconds * cycles) + (breakSeconds * cycles);
   NSLog(@"totalTime in seconds: %d", totalTimeInSeconds);
   NSString *totalTimeString;
@@ -205,17 +246,36 @@
     int minutes = floor(totalTimeInSeconds / 60);
     
     totalTimeString = [NSString stringWithFormat: @"%d hour %d minute", hours, minutes];
-  } else {
+  } else if(totalTimeInSeconds > 60) {
     int minutes = floor(totalTimeInSeconds / 60);
     
     totalTimeString = [NSString stringWithFormat: @"%d minute", minutes];
+  } else {
+    totalTimeString = [NSString stringWithFormat: @"%d second", totalTimeInSeconds];
   }
   
-  NSAlert *alert = [NSAlert alertWithMessageText: @"Finished" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"You've finished a %@ cycle", totalTimeString ];
   NSSound *alertSound = [NSSound soundNamed: @"Submarine"];
-  
   if(alertSound) [alertSound play];
-  [alert runModal];
+
+  NSString *timerAlerts = [[NSUserDefaults standardUserDefaults] objectForKey: @"timerAlerts"];
+  if(timerAlerts == @"Use Growl Notifications") {
+    NSString *description = [NSString stringWithFormat: @"You've finished a %@ cycle!", totalTimeString];
+    [GrowlApplicationBridge notifyWithTitle: @"All Cycles Complete" description: description
+                            notificationName: @"All Cycles Complete" iconData: nil 
+                            priority: 0 isSticky: YES clickContext: nil];
+  } else {
+    NSAlert *alert = [NSAlert alertWithMessageText: @"Finished" defaultButton: nil alternateButton: nil otherButton: nil informativeTextWithFormat: @"You've finished a %@ cycle", totalTimeString ];
+    [alert runModal];
+  }
+}
+
+- (void) growlNotificationWasClicked: (id) clickContext {
+  NSLog(@"got click: %@", clickContext);
+  if([@"StartBreakClick" isEqualToString: clickContext]) {
+    [self startBreakTimer];
+  } else if([@"StartWorkClick" isEqualToString: clickContext]) {
+    [self startWorkTimer];
+  }
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication { return YES; }

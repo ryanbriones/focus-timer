@@ -15,12 +15,27 @@
 		113799550F8146880058E20E /* FTTimerFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 113799540F8146880058E20E /* FTTimerFormatter.m */; };
 		1137995A0F81469C0058E20E /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 113799590F81469C0058E20E /* MainMenuController.m */; };
 		115D8C9C0F82F80500C8D5D7 /* Focus Timer.icns in Resources */ = {isa = PBXBuildFile; fileRef = 115D8C9B0F82F80500C8D5D7 /* Focus Timer.icns */; };
+		1170FBF30FC47EAC00EA4236 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1170FBF20FC47EAC00EA4236 /* Growl.framework */; };
+		1170FBF50FC47ECA00EA4236 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1170FBF20FC47EAC00EA4236 /* Growl.framework */; };
 		1176B40D0FA5FA14006CB035 /* Timers.png in Resources */ = {isa = PBXBuildFile; fileRef = 1176B40C0FA5FA14006CB035 /* Timers.png */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1170FBF70FC47EE800EA4236 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1170FBF50FC47ECA00EA4236 /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -38,6 +53,7 @@
 		113799580F81469C0058E20E /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		113799590F81469C0058E20E /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
 		115D8C9B0F82F80500C8D5D7 /* Focus Timer.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Focus Timer.icns"; sourceTree = "<group>"; };
+		1170FBF20FC47EAC00EA4236 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../Resources/Growl.framework; sourceTree = SOURCE_ROOT; };
 		1176B40C0FA5FA14006CB035 /* Timers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Timers.png; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -54,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				1170FBF30FC47EAC00EA4236 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +157,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1170FBF20FC47EAC00EA4236 /* Growl.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -156,6 +174,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				1170FBF70FC47EE800EA4236 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -241,6 +260,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Resources\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = required;
@@ -259,6 +282,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Resources\"",
+				);
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

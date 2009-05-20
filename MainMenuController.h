@@ -1,7 +1,8 @@
 #import <Cocoa/Cocoa.h>
+#import <Growl/Growl.h>
 @class PreferencesController;
 
-@interface MainMenuController : NSObject {
+@interface MainMenuController : NSObject <GrowlApplicationBridgeDelegate> {
   PreferencesController *preferencesController;
   IBOutlet NSTextField *timerLabel;
   IBOutlet NSTextField *workTextField;
@@ -26,6 +27,7 @@
 @property NSInteger cycles;
 @property NSTimer *timer;
 
+- (NSDictionary *) registrationDictionaryForGrowl;
 - (IBAction) showPreferencesPanel: (id) sender;
 - (IBAction) updateTimerFieldsFromPreset: (id) sender;
 
